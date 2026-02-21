@@ -1,23 +1,24 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<header>
-  <div class="header-content">
-    <h1>✈️ Reserves de Vols</h1>
-    <nav>
-      <a routerLink="/flights" routerLinkActive="active">Vols</a>
-      <ng-container *ngIf="authService.isAuthenticated(); else notLoggedIn">
-        <a routerLink="/bookings" routerLinkActive="active">Les meves reserves</a>
-        <span class="user-name">{{ (authService.currentUser$ | async)?.name }}</span>
-        <button (click)="logout()" class="btn-logout">Sortir</button>
-      </ng-container>
-      <ng-template #notLoggedIn>
-        <a routerLink="/login" routerLinkActive="active">Entrar</a>
-        <a routerLink="/register" routerLinkActive="active">Registrar-se</a>
-      </ng-template>
-    </nav>
+<mat-toolbar color="primary">
+  <div class="toolbar-left">
+    <span class="app-title">✈️ Reserves de Vols</span>
   </div>
-</header>
+  <span class="spacer"></span>
+  <nav class="toolbar-actions">
+    <button mat-button routerLink="/flights">Vols</button>
+    <ng-container *ngIf="authService.isAuthenticated(); else notLoggedIn">
+      <button mat-button routerLink="/bookings">Les meves reserves</button>
+      <button mat-icon-button (click)="logout()" aria-label="Sortir" title="Sortir">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </ng-container>
+    <ng-template #notLoggedIn>
+      <button mat-button routerLink="/login">Entrar</button>
+      <button mat-stroked-button routerLink="/register">Registrar-se</button>
+    </ng-template>
+  </nav>
+</mat-toolbar>
 
-<main>
+<main class="app-content">
   <router-outlet></router-outlet>
 </main>
 
