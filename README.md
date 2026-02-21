@@ -20,12 +20,6 @@ Desenvolupament d'un frontend Angular per a la pràctica de reserves de vols. Aq
   - `reserves-api.postman_environment.json` — variables d'entorn Postman
 - `scripts/api_smoke.ps1` — script PowerShell que crea un usuari de prova, inicia sessió i crea una reserva
 
-## Badges
-
-- Release: mostra la versió actual (`v1.1`).
-- License: MIT (si vols un altre llicència canvia el fitxer `LICENSE`).
-- Issues: enllaç al repositori per a incidències.
-
 ## Requisits
 
 - Node.js 18+ i `npm` (gestor de paquets).
