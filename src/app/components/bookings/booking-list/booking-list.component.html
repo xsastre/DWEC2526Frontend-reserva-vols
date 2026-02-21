@@ -1,0 +1,41 @@
+<div class="container">
+  <h2>Les Meves Reserves</h2>
+
+  <div *ngIf="loading" class="loading"><p>Carregant reserves...</p></div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadBookings()">Tornar a provar</button>
+  </div>
+
+  <div *ngIf="!loading && !error">
+    <div *ngIf="bookings.length === 0" class="no-bookings">
+      <p>No tens cap reserva.</p>
+      <a routerLink="/flights" class="btn-primary">Cercar vols</a>
+    </div>
+
+    <div class="bookings-list">
+      <div *ngFor="let booking of bookings" class="booking-card">
+        <div class="booking-header">
+          <span class="booking-id">Reserva #{{ booking.id }}</span>
+          <span [class]="'status ' + getStatusClass(booking.status)">{{ getStatusText(booking.status) }}</span>
+        </div>
+
+        <div *ngIf="booking.flight" class="flight-info">
+          <h4>{{ booking.flight.flightNumber }} - {{ booking.flight.airline }}</h4>
+          <p class="route">{{ booking.flight.origin }} → {{ booking.flight.destination }}</p>
+          <p class="date">📅 {{ booking.flight.departureDate }} | 🕐 {{ booking.flight.departureTime }} - {{ booking.flight.arrivalTime }}</p>
+        </div>
+
+        <div class="booking-details">
+          <p>👥 {{ booking.passengers }} {{ booking.passengers === 1 ? 'passatger' : 'passatgers' }}</p>
+          <p class="total-price">💰 {{ booking.totalPrice | currency:'EUR' }}</p>
+        </div>
+
+        <div class="booking-actions" *ngIf="booking.status === 'confirmed'">
+          <button (click)="cancelBooking(booking.id)" class="btn-cancel">Cancel·lar reserva</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

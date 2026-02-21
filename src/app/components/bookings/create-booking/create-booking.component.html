@@ -1,0 +1,50 @@
+<div class="container">
+  <h2>Crear Reserva</h2>
+
+  <div *ngIf="loading" class="loading"><p>Carregant informació del vol...</p></div>
+
+  <div *ngIf="error && !flight" class="error">
+    <p>{{ error }}</p>
+    <button routerLink="/flights">Tornar als vols</button>
+  </div>
+
+  <div *ngIf="success" class="success">
+    <p>✓ {{ success }}</p>
+    <p>Redirigint a les teves reserves...</p>
+  </div>
+
+  <div *ngIf="flight && !success" class="booking-form">
+    <div class="flight-summary">
+      <h3>Detalls del vol</h3>
+      <div class="flight-details">
+        <p><strong>Vol:</strong> {{ flight.flightNumber }} - {{ flight.airline }}</p>
+        <p><strong>Ruta:</strong> {{ flight.origin }} → {{ flight.destination }}</p>
+        <p><strong>Data:</strong> {{ flight.departureDate }}</p>
+        <p><strong>Horari:</strong> {{ flight.departureTime }} - {{ flight.arrivalTime }}</p>
+        <p><strong>Preu per passatger:</strong> {{ flight.price | currency:'EUR' }}</p>
+        <p><strong>Seients disponibles:</strong> {{ flight.availableSeats }}</p>
+      </div>
+    </div>
+
+    <form (ngSubmit)="onSubmit()">
+      <div *ngIf="error" class="error-message">{{ error }}</div>
+
+      <div class="form-group">
+        <label for="passengers">Nombre de passatgers</label>
+        <select id="passengers" [(ngModel)]="passengers" name="passengers">
+          <option *ngFor="let i of [1,2,3,4,5,6,7,8,9]" [value]="i" [disabled]="i > flight.availableSeats">{{ i }} {{ i === 1 ? 'passatger' : 'passatgers' }}</option>
+        </select>
+      </div>
+
+      <div class="total-price">
+        <span>Preu total:</span>
+        <span class="price">{{ totalPrice | currency:'EUR' }}</span>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" routerLink="/flights" class="btn-cancel">Cancel·lar</button>
+        <button type="submit" [disabled]="submitting" class="btn-confirm">{{ submitting ? 'Processant...' : 'Confirmar Reserva' }}</button>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+  <h2>Cerca de Vols</h2>
+  
+  <div class="search-filters">
+    <div class="filter-group">
+      <label>Origen</label>
+      <select [(ngModel)]="selectedOrigin">
+        <option value="">Tots</option>
+        <option *ngFor="let origin of origins" [value]="origin">{{ origin }}</option>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <label>Destinació</label>
+      <select [(ngModel)]="selectedDestination">
+        <option value="">Totes</option>
+        <option *ngFor="let dest of destinations" [value]="dest">{{ dest }}</option>
+      </select>
+    </div>
+    
+    <div class="filter-group">
+      <label>Data</label>
+      <input type="date" [(ngModel)]="selectedDate">
+    </div>
+    
+    <div class="filter-actions">
+      <button (click)="onSearch()" class="btn-search">Cercar</button>
+      <button (click)="clearFilters()" class="btn-clear">Netejar</button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="loading"><p>Carregant vols...</p></div>
+
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadFlights()">Tornar a provar</button>
+  </div>
+
+  <div *ngIf="!loading && !error" class="flights-grid">
+    <div *ngIf="flights.length === 0" class="no-results"><p>No s'han trobat vols amb els criteris seleccionats.</p></div>
+    <div *ngFor="let flight of flights" class="flight-card">
+      <div class="flight-header">
+        <span class="flight-number">{{ flight.flightNumber }}</span>
+        <span class="airline">{{ flight.airline }}</span>
+      </div>
+      <div class="flight-route">
+        <div class="city">
+          <span class="time">{{ flight.departureTime }}</span>
+          <span class="name">{{ flight.origin }}</span>
+        </div>
+        <div class="arrow">✈️ →</div>
+        <div class="city">
+          <span class="time">{{ flight.arrivalTime }}</span>
+          <span class="name">{{ flight.destination }}</span>
+        </div>
+      </div>
+      <div class="flight-info">
+        <span class="date">📅 {{ flight.departureDate }}</span>
+        <span class="seats">🪑 {{ flight.availableSeats }} seients</span>
+      </div>
+      <div class="flight-footer">
+        <span class="price">{{ flight.price | currency:'EUR' }}</span>
+        <button (click)="bookFlight(flight)" [disabled]="flight.availableSeats === 0" class="btn-book">
+          {{ flight.availableSeats === 0 ? 'Sense places' : 'Reservar' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
