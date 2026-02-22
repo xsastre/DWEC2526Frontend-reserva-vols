@@ -113,6 +113,4 @@ Si vols col·laborar, obre una _issue_ o envia un _pull request_.
 
 Aquest projecte es publica sota llicència MIT — afegeix un fitxer `LICENSE` si no existeix.
 
----
 
-Si vols que adapti components concrets perquè utilitzin més elements d'Angular Material (formularis amb `mat-form-field`, llistes amb `mat-card` o taules `mat-table`), digues quins i ho preparo a la següent versió.
